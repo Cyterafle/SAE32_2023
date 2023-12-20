@@ -2,12 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class PetitTableur1 extends JFrame {
+public class PetitTableur extends JFrame {
 
     private JLabel[][] cellule;
     private JTextField champFormule;
@@ -15,7 +13,7 @@ public class PetitTableur1 extends JFrame {
     private int lastSelectedRow = -1;
     private int lastSelectedColumn = -1;
 
-    public PetitTableur1() {
+    public PetitTableur() {
         super("Excel de wish");
 
         model = new PetitTableurModel(9, 9);
@@ -53,14 +51,7 @@ public class PetitTableur1 extends JFrame {
 
         champFormule = new JTextField();
         champFormule.addActionListener(new EcouteurActionFormule());
-        champFormule.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (lastSelectedRow >= 0 && lastSelectedColumn >= 0) {
-                    cellule[lastSelectedRow][lastSelectedColumn].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                }
-            }
-        });
+        champFormule.setEnabled(false);
 
         container.add(champFormule, BorderLayout.NORTH);
         container.add(petitTableur, BorderLayout.CENTER);
@@ -97,6 +88,7 @@ public class PetitTableur1 extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             model.setSelectedCell(ligne, colonne);
+            champFormule.setEnabled(true);
         }
     }
 
@@ -106,13 +98,16 @@ public class PetitTableur1 extends JFrame {
             int ligne = model.getSelectedRow();
             int colonne = model.getSelectedColumn();
             if (ligne >= 0 && colonne >= 0) {
-                model.setCellValue(ligne, colonne, champFormule.getText());
-                cellule[ligne][colonne].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                String nouvelleFormule = champFormule.getText();
+                model.setCellValue(ligne, colonne, nouvelleFormule);
+                cellule[ligne][colonne].setText(nouvelleFormule);
+                cellule[ligne][colonne].setBackground(null);
+                champFormule.setEnabled(false);
             }
         }
     }
 
     public static void main(String[] args) {
-        new PetitTableur1();
+        new PetitTableur();
     }
 }
