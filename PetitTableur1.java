@@ -32,11 +32,13 @@ public class PetitTableur1 extends JFrame {
 
         for (String colonnes : colonne) {
             JLabel Colonne = new JLabel(colonnes, SwingConstants.CENTER);
+            Colonne.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             petitTableur.add(Colonne);
         }
 
         for (int i = 0; i < 9; i++) {
             JLabel Ligne = new JLabel(ligne[i], SwingConstants.CENTER);
+            Ligne.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             petitTableur.add(Ligne);
 
             for (int j = 0; j < 9; j++) {
@@ -54,7 +56,6 @@ public class PetitTableur1 extends JFrame {
         champFormule.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                // Remettre la cellule précédemment sélectionnée à son état normal
                 if (lastSelectedRow >= 0 && lastSelectedColumn >= 0) {
                     cellule[lastSelectedRow][lastSelectedColumn].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 }
@@ -67,18 +68,12 @@ public class PetitTableur1 extends JFrame {
         model.addSelectionListener(new PetitTableurModel.SelectionListener() {
             @Override
             public void onCellSelected(int row, int col) {
-                // Mettre en avant la cellule visuellement
-                cellule[row][col].setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-                // Afficher la formule dans le champ de formule
+                cellule[row][col].setBackground(Color.YELLOW);
                 champFormule.setText(model.getCellValue(row, col));
-
-                // Remettre la cellule précédemment sélectionnée à son état normal
                 if (lastSelectedRow >= 0 && lastSelectedColumn >= 0 &&
                         (lastSelectedRow != row || lastSelectedColumn != col)) {
-                    cellule[lastSelectedRow][lastSelectedColumn].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    cellule[lastSelectedRow][lastSelectedColumn].setBackground(null);
                 }
-
-                // Mettre à jour les indices de la dernière cellule sélectionnée
                 lastSelectedRow = row;
                 lastSelectedColumn = col;
             }
@@ -101,7 +96,6 @@ public class PetitTableur1 extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            // Informer le modèle de la cellule sélectionnée
             model.setSelectedCell(ligne, colonne);
         }
     }
@@ -109,12 +103,10 @@ public class PetitTableur1 extends JFrame {
     private class EcouteurActionFormule implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Mettre à jour la formule de la cellule sélectionnée
             int ligne = model.getSelectedRow();
             int colonne = model.getSelectedColumn();
             if (ligne >= 0 && colonne >= 0) {
                 model.setCellValue(ligne, colonne, champFormule.getText());
-                // Remettre la cellule sélectionnée à son état normal
                 cellule[ligne][colonne].setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }
         }
