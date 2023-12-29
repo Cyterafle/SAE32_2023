@@ -12,6 +12,7 @@ public class PetitTableur extends JFrame {
     private PetitTableurModel model;
     private int lastSelectedRow = -1;
     private int lastSelectedColumn = -1;
+    private JPanel petitTableur;
 
     public PetitTableur() {
         super("Excel de wish");
@@ -26,7 +27,7 @@ public class PetitTableur extends JFrame {
 
         cellule = new JLabel[9][9];
 
-        JPanel petitTableur = new JPanel(new GridLayout(10, 10));
+        petitTableur = new JPanel(new GridLayout(10, 10));
 
         for (String colonnes : colonne) {
             JLabel Colonne = new JLabel(colonnes, SwingConstants.CENTER);
