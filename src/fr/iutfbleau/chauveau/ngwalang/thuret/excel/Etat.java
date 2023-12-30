@@ -1,3 +1,4 @@
+package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 /**
  * Enumération <code>Etat</code> provenant du diagramme de classes de Côme Thuret
  * permettant de connaître la validité ou non de la formule saisie

@@ -1,3 +1,4 @@
+package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 /**
  * Classe <code>Cellule</code> tirée du diagramme de classe fait par Côme
  * Thuret. Elle sert à matérialiser la cellule, stocker la valeur associée

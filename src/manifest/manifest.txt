@@ -1,0 +1,1 @@
+Main-Class: fr.iutfbleau.chauveau.ngwalang.thuret.excel.Main
