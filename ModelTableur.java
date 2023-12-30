@@ -1,15 +1,17 @@
+import javax.swing.*;
 import java.util.*;
 
 public class ModelTableur {
+    private VueTableur vue;
     private String[][] data;
     private int selectedRow, selectedColumn, lastSelectedRow, lastSelectedColumn;
-    private List<SelectionListener> selectionListeners;
+    private ControllerTableur controller;
 
-    public ModelTableur(){
+    public ModelTableur(VueTableur v){
         data = new String[9][9];
         selectedRow = -1;
         selectedColumn = -1;
-        selectionListeners = new ArrayList<>();
+        vue = v;
     }
 
     public String getCellValue(int row, int col) {
@@ -50,14 +52,22 @@ public class ModelTableur {
         return selectedColumn;
     }
 
-    public void addSelectionListener(SelectionListener listener) {
-        selectionListeners.add(listener);
+    public void addSelectionListener(ControllerTableur listener) {
+        controller = listener;
+    }
+
+    public void addCellListener(JLabel[][] cells){
+        CellListener.setModel(this);
+        CellListener.setVue(vue);
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                cells[i][j].addMouseListener(new CellListener(i, j));
+            }
+        }
     }
 
     private void notifySelectionListeners() {
-        for (SelectionListener listener : selectionListeners) {
-            listener.onCellSelected(selectedRow, selectedColumn);
-        }
+            controller.onCellSelected(selectedRow, selectedColumn);
     }
 
     public interface SelectionListener {

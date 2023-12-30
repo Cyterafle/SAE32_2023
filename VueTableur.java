@@ -31,13 +31,11 @@ public class VueTableur extends JFrame {
                 cellule[i][j].setHorizontalAlignment(SwingConstants.CENTER);
                 cellule[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 cellule[i][j].setOpaque(true);
-                //cellule[i][j].addMouseListener(new EcouteurClicCellule(i, j));
                 petitTableur.add(cellule[i][j]);
             }
         }
 
         champFormule = new JTextField();
-        //champFormule.addActionListener(new EcouteurActionFormule());
         champFormule.setEnabled(false);
 
         add(champFormule, BorderLayout.NORTH);
@@ -56,5 +54,9 @@ public class VueTableur extends JFrame {
 
     public JLabel getCellule(int row, int col){
         return cellule[row][col];
+    }
+
+    public JLabel[][] getCellTab(){
+        return cellule;
     }
 }

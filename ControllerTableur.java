@@ -5,11 +5,11 @@ public class ControllerTableur implements SelectionListener, ActionListener{
     private ModelTableur model;
     private VueTableur vue;
     public ControllerTableur(){
-        model = new ModelTableur();
         vue = new VueTableur();
+        model = new ModelTableur(vue);
         vue.getChampFormule().addActionListener(this);
-        CellListener.setModel(model);
-        CellListener.setVue(vue);
+        model.addCellListener(vue.getCellTab());
+        model.addSelectionListener(this);
     }
 
     @Override
@@ -36,8 +36,4 @@ public class ControllerTableur implements SelectionListener, ActionListener{
                 vue.getChampFormule().setEnabled(false);
             }
         }
-
-    public interface SelectionListener {
-        void onCellSelected(int row, int col);
-    }
 }
