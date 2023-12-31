@@ -4,23 +4,43 @@ import java.util.*;
 
 public class ModelTableur {
     private VueTableur vue;
-    private String[][] data;
+    private Cellule[][] data;
     private int selectedRow, selectedColumn, lastSelectedRow, lastSelectedColumn;
     private ControllerTableur controller;
 
     public ModelTableur(VueTableur v){
-        data = new String[9][9];
+        data = new Cellule[9][9];
+        fillData();
         selectedRow = -1;
         selectedColumn = -1;
         vue = v;
     }
-
-    public String getCellValue(int row, int col) {
-        return data[row][col];
+    /**
+     * Récupère la formule associée à une cellule
+     * @param row représente la ligne de la cellule
+     * @param col représente la colonne de la cellule
+     * @return null ou la formule demandée
+     */
+    public String getFormule(int row, int col){
+        return data[row][col].getformule();
+    }
+    /**
+     * Permet d'associer une formule à une cellule
+     * @param row représente la ligne de la cellule
+     * @param col représente la colonne de la cellule
+     */
+    public void setFormule(int row, int col, String formule){
+        data[row][col].setformule(formule);
+        data[row][col].setvaleur(row*col); //Histoire de tester le code
     }
 
-    public void setCellValue(int row, int col, String value) {
-        data[row][col] = value;
+    // Elle sera appelée par la méthode qui fait les calculs
+    private void setCellValue(int row, int col, double value) {
+        data[row][col].setvaleur(value);
+    }
+
+    public String getCellValue(int row, int col) {
+        return Double.toString(data[row][col].getvaleur());
     }
 
     public void setSelectedCell(int row, int col) {
@@ -70,8 +90,14 @@ public class ModelTableur {
     private void notifySelectionListeners() {
             controller.onCellSelected(selectedRow, selectedColumn);
     }
-
-    public interface SelectionListener {
-        void onCellSelected(int row, int col);
+    /**
+     * Méthode interne servant à initialiser les cellules pour éviter le NullPointerException
+     */
+    private void fillData(){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                data[i][j] = new Cellule();
+            }
+        }
     }
 }

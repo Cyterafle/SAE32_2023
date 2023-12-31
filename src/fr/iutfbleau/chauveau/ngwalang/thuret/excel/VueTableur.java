@@ -9,7 +9,7 @@ public class VueTableur extends JFrame {
     private JTextField champFormule;
 
     public VueTableur(){
-        super("Feuille de calcul");
+        super("Excel de Wish");
         setLayout(new BorderLayout());
         JPanel petitTableur = new JPanel(new GridLayout(10, 10));
         String[] colonne = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I"};

@@ -20,6 +20,12 @@ public class Cellule {
         this.ligIndex = ligne;
     }
     /**
+     * Constructeur alternatif qui crée une cellule en définissant l'état de la formule à vide
+     */
+    public Cellule(){
+        this.etat = Etat.VIDE;
+    }
+    /**
      * Permet de définir l'Etat de la cellule
      * @param e représente l'etat que l'on veut appliquer
      */
