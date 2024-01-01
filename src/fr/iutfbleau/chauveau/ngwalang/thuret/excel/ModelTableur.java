@@ -1,15 +1,16 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 import javax.swing.*;
-import java.util.*;
 
 public class ModelTableur {
     private VueTableur vue;
     private Cellule[][] data;
     private int selectedRow, selectedColumn, lastSelectedRow, lastSelectedColumn;
     private ControllerTableur controller;
+    private ArbreBinaire arbre;
 
     public ModelTableur(VueTableur v){
         data = new Cellule[9][9];
+        arbre = new ArbreBinaire();
         fillData();
         selectedRow = -1;
         selectedColumn = -1;
@@ -29,12 +30,28 @@ public class ModelTableur {
      * @param row représente la ligne de la cellule
      * @param col représente la colonne de la cellule
      */
-    public void setFormule(int row, int col, String formule){
+    private void setFormule(int row, int col, String formule){
         data[row][col].setformule(formule);
-        data[row][col].setvaleur(row*col); //Histoire de tester le code
     }
 
-    // Elle sera appelée par la méthode qui fait les calculs
+    /**
+     * Permet de calculer la valeur à placer dans une cellule à partir de sa formule
+     * @param row représente la ligne de la cellule concernée
+     * @param col représente la colonne de la cellule concernée
+     * @param formule représente la formule à partir de laquelle faire le calcul
+     */
+    public void calcul(int row, int col, String formule){
+        setFormule(row, col, formule);
+        arbre.inserer(formule);
+        setCellValue(row, col, arbre.calculer());
+    }
+
+    /**
+     * Permet d'associer à une cellule une valeur en fonction de sa formule
+     * @param row représente la ligne de la cellule concernée
+     * @param col représente la colonne de la cellule concernée
+     * @param value représente la nouvelle valeur de la cellule
+     */
     private void setCellValue(int row, int col, double value) {
         data[row][col].setvaleur(value);
     }

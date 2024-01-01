@@ -18,7 +18,7 @@ ${tmp}/${pkg}/Main.class : ${tmp}/${pkg}/ControllerTableur.class
 	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/Main.java
 
 ## Grosse règle circulaire ici faisant qu'il ne pouvait pas être autrement 
-${tmp}/${pkg}/ControllerTableur.class : ${tmp}/${pkg}/VueTableur.class ${tmp}/${pkg}/SelectionListener.class ${tmp}/${pkg}/Cellule.class
+${tmp}/${pkg}/ControllerTableur.class : ${tmp}/${pkg}/VueTableur.class ${tmp}/${pkg}/SelectionListener.class ${tmp}/${pkg}/Cellule.class ${tmp}/${pkg}/ArbreBinaire.class
 	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/ControllerTableur.java src/${pkg}/ModelTableur.java src/${pkg}/CellListener.java
 
 ${tmp}/${pkg}/VueTableur.class :
@@ -32,6 +32,12 @@ ${tmp}/${pkg}/Etat.class :
 
 ${tmp}/${pkg}/Cellule.class : ${tmp}/${pkg}/Etat.class
 	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/Cellule.java
+
+${tmp}/${pkg}/ArbreBinaire.class : ${tmp}/${pkg}/Noeud.class
+	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/ArbreBinaire.java
+
+${tmp}/${pkg}/Noeud.class :
+	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/Noeud.java
 
 clean :
 	rm -rf ${tmp}

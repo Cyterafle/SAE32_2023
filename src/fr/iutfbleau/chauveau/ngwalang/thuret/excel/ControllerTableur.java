@@ -31,7 +31,7 @@ public class ControllerTableur implements SelectionListener, ActionListener{
             int colonne = model.getSelectedColumn();
             if (ligne >= 0 && colonne >= 0) {
                 String nouvelleFormule = vue.getChampFormule().getText();
-                model.setFormule(ligne, colonne, nouvelleFormule);
+                model.calcul(ligne, colonne, nouvelleFormule);
                 vue.getCellule(ligne, colonne).setText(model.getCellValue(ligne, colonne));
                 vue.getCellule(ligne, colonne).setBackground(null);
                 vue.getChampFormule().setEnabled(false);

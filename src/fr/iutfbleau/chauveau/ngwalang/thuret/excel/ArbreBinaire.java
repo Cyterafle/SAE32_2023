@@ -1,3 +1,4 @@
+package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 public class ArbreBinaire {
     Noeud racine;
 
