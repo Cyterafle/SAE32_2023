@@ -1,9 +1,11 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 public class ArbreBinaire {
-    Noeud racine;
+    private Noeud racine;
+    private ModelTableur model;
 
-    public ArbreBinaire() {
+    public ArbreBinaire(ModelTableur mtab) {
         this.racine = null;
+        this.model = mtab;
     }
 
     // Méthode pour insérer un nouvel élément dans l'arbre
@@ -33,6 +35,55 @@ public class ArbreBinaire {
         return valeur.equals("+") || valeur.equals("-") || valeur.equals("*") || valeur.equals("/");
     }
 
+    private boolean estCellule(String valeur) {
+        char[] alpha = new char[9];
+        char[] num = new char[9];
+        char[] element = valeur.toCharArray();
+        for (int i = 0; i < 9; i++){
+            alpha[i] = (char) ('A'+ i );
+            num[i] = (char) ('1'+ i);
+        }
+
+        for (char eleA : alpha){
+            if (eleA == element[0]){
+                for (char eleN : num){
+                    if (eleN == element[1]){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private double getCellVal(String valeur){
+        char[] alpha = new char[9];
+        char[] num = new char[9];
+        char[] element = valeur.toCharArray();
+        double val = 0.0;
+        for (int t = 0; t < 9; t++){
+            alpha[t] = (char) ('A'+ t );
+            num[t] = (char) ('1'+ t);
+
+        }
+
+        for (int i = 0; i < 9 ; i++){
+            if (element[0] == alpha[i]){
+                for (int j = 0 ; j < 9 ; j++){
+                    if (element[1] == num[j]){
+                        val = Double.parseDouble(this.model.getCellValue(j, i));
+                    }
+                }
+            }
+        }
+        return val;
+    }
+
+    public void setModel(ModelTableur model) {
+        this.model = model;
+    }
+
     //calcule le résultat du calcul dans l'arbre
     public double calculer() {
         return calculer(racine);
@@ -44,9 +95,14 @@ public class ArbreBinaire {
             return 0.0;
         }
 
-        if (!estOperateur(racine.valeur)) {
-            return Double.parseDouble(racine.valeur);
+        else if (!estOperateur(racine.valeur)) {
+            if (estCellule(racine.valeur)) {
+                return getCellVal(racine.valeur);
+            } else {
+                return Double.parseDouble(racine.valeur);
+            }
         }
+
         double gauche = calculer(racine.gauche);
         double droit = calculer(racine.droit);
 
@@ -66,17 +122,5 @@ public class ArbreBinaire {
             default:
                 throw new IllegalArgumentException("Opérateur non pris en charge : " + racine.valeur);
         }
-    }
-
-    private void afficherArbre(Noeud racine, String espace, String direction) {
-        if (racine != null) {
-            System.out.println(espace + direction + racine.valeur);
-            afficherArbre(racine.gauche, espace + "│  ", "├─");
-            afficherArbre(racine.droit, espace + "   ", "└─");
-        }
-    }
-
-    public void afficherArbre() {
-        afficherArbre(racine, "", "");
     }
 }

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class ControllerTableur implements SelectionListener, ActionListener{
-    private ModelTableur model;
+    protected ModelTableur model;
     private VueTableur vue;
     public ControllerTableur(){
         vue = new VueTableur();

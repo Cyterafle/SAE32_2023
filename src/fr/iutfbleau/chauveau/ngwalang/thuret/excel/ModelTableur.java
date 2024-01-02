@@ -9,12 +9,12 @@ public class ModelTableur {
     private ArbreBinaire arbre;
 
     public ModelTableur(VueTableur v){
-        data = new Cellule[9][9];
-        arbre = new ArbreBinaire();
+        this.data = new Cellule[9][9];
+        this.arbre = new ArbreBinaire(this);
         fillData();
-        selectedRow = -1;
-        selectedColumn = -1;
-        vue = v;
+        this.selectedRow = -1;
+        this.selectedColumn = -1;
+        this.vue = v;
     }
     /**
      * Récupère la formule associée à une cellule
@@ -44,6 +44,7 @@ public class ModelTableur {
         setFormule(row, col, formule);
         arbre.inserer(formule);
         setCellValue(row, col, arbre.calculer());
+        arbre.setModel(this);
     }
 
     /**
