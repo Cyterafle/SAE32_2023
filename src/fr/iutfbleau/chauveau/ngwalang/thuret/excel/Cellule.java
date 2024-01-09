@@ -30,55 +30,55 @@ public class Cellule {
      * @param e représente l'etat que l'on veut appliquer
      */
     public void setetat(Etat e){
-        etat = e;
+        this.etat = e;
     }
     /**
      * Récupère la formule donnée au tableau
      * @param f représente la formule du tableur
     */
     public void setformule(String f){
-        formule = f;
+        this.formule = f;
     }
     /**
      * Récupère le résultat du calcul de la formule
      * @param value représente ce résultat
      */
     public void setvaleur(double value){
-        valeur = value;
+        this.valeur = value;
     }
     /**
      * Renvoie l'index de la colonne
      * @return un index
      */
     public int getcolIndex(){
-        return colIndex;
+        return this.colIndex;
     }
     /**
      * Renvoie l'index de la ligne
      * @return une ligne
      */
     public char getligIndex(){
-        return ligIndex;
+        return this.ligIndex;
     }
     /**
      * Renvoie l'Etat de la cellule
      * @return un état
     */
     public Etat getetat(){
-        return etat;
+        return this.etat;
     }
     /**
      * Renvoie la dernière formule connue
      * @return une formule
      */
     public String getformule(){
-        return formule;
+        return this.formule;
     }
     /**
      * Renvoie le dernier résultat connu
      * @return valeur
      */
     public double getvaleur(){
-        return valeur;
+        return this.valeur;
     }
 }

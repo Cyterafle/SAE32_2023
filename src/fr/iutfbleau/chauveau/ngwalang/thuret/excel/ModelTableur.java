@@ -23,7 +23,7 @@ public class ModelTableur {
      * @return null ou la formule demandée
      */
     public String getFormule(int row, int col){
-        return data[row][col].getformule();
+        return this.data[row][col].getformule();
     }
     /**
      * Permet d'associer une formule à une cellule
@@ -31,7 +31,7 @@ public class ModelTableur {
      * @param col représente la colonne de la cellule
      */
     private void setFormule(int row, int col, String formule){
-        data[row][col].setformule(formule);
+        this.data[row][col].setformule(formule);
     }
 
     /**
@@ -42,9 +42,12 @@ public class ModelTableur {
      */
     public void calcul(int row, int col, String formule){
         setFormule(row, col, formule);
-        arbre.inserer(formule);
+        System.out.println(formule);
+        System.out.println(formule.length());
+        this.arbre.inserer(formule);
         setCellValue(row, col, arbre.calculer());
-        arbre.setModel(this);
+        this.arbre.setModel(this);
+        this.arbre.afficherArbre();
     }
 
     /**
@@ -54,41 +57,41 @@ public class ModelTableur {
      * @param value représente la nouvelle valeur de la cellule
      */
     private void setCellValue(int row, int col, double value) {
-        data[row][col].setvaleur(value);
+        this.data[row][col].setvaleur(value);
     }
 
     public String getCellValue(int row, int col) {
-        return Double.toString(data[row][col].getvaleur());
+        return Double.toString(this.data[row][col].getvaleur());
     }
 
     public void setSelectedCell(int row, int col) {
-        selectedRow = row;
-        selectedColumn = col;
+        this.selectedRow = row;
+        this.selectedColumn = col;
         notifySelectionListeners();
     }
 
     public void setLastSelectedRow(int row){
-        lastSelectedRow = row;
+        this.lastSelectedRow = row;
     }
 
     public void setLastSelectedColumn(int col){
-        lastSelectedColumn = col;
+        this.lastSelectedColumn = col;
     }
 
     public int getLastSelectedRow(){
-        return lastSelectedRow;
+        return this.lastSelectedRow;
     }
 
     public int getLastSelectedColumn(){
-        return lastSelectedColumn;
+        return this.lastSelectedColumn;
     }
 
     public int getSelectedRow() {
-        return selectedRow;
+        return this.selectedRow;
     }
 
     public int getSelectedColumn() {
-        return selectedColumn;
+        return this.selectedColumn;
     }
 
     public void addSelectionListener(ControllerTableur listener) {
@@ -106,7 +109,7 @@ public class ModelTableur {
     }
 
     private void notifySelectionListeners() {
-            controller.onCellSelected(selectedRow, selectedColumn);
+        this.controller.onCellSelected(selectedRow, selectedColumn);
     }
     /**
      * Méthode interne servant à initialiser les cellules pour éviter le NullPointerException
@@ -114,7 +117,7 @@ public class ModelTableur {
     private void fillData(){
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
-                data[i][j] = new Cellule();
+                this.data[i][j] = new Cellule();
             }
         }
     }

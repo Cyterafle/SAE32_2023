@@ -29,18 +29,18 @@ public class VueTableur extends JFrame {
             petitTableur.add(Ligne);
 
             for (int j = 0; j < 9; j++) {
-                cellule[i][j] = new JLabel();
-                cellule[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-                cellule[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                cellule[i][j].setOpaque(true);
-                petitTableur.add(cellule[i][j]);
+                this.cellule[i][j] = new JLabel();
+                this.cellule[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+                this.cellule[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                this.cellule[i][j].setOpaque(true);
+                petitTableur.add(this.cellule[i][j]);
             }
         }
 
-        champFormule = new JTextField();
-        champFormule.setEnabled(false);
+        this.champFormule = new JTextField();
+        this.champFormule.setEnabled(false);
 
-        add(champFormule, BorderLayout.NORTH);
+        add(this.champFormule, BorderLayout.NORTH);
         add(petitTableur, BorderLayout.CENTER);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,14 +51,14 @@ public class VueTableur extends JFrame {
     }
 
     public JTextField getChampFormule(){
-        return champFormule;
+        return this.champFormule;
     }
 
     public JLabel getCellule(int row, int col){
-        return cellule[row][col];
+        return this.cellule[row][col];
     }
 
     public JLabel[][] getCellTab(){
-        return cellule;
+        return this.cellule;
     }
 }

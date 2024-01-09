@@ -2,6 +2,7 @@ package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 public class ArbreBinaire {
     private Noeud racine;
     private ModelTableur model;
+    private int index;
 
     public ArbreBinaire(ModelTableur mtab) {
         this.racine = null;
@@ -9,14 +10,16 @@ public class ArbreBinaire {
     }
 
     // Méthode pour insérer un nouvel élément dans l'arbre
-    private Noeud insererNoeud(Noeud racine, String[] expression, int index) {
-        if (index < expression.length) {
-            String valeur = expression[index];
+    private Noeud insererNoeud(Noeud racine, String[] expression) {
+        if (this.index < expression.length) {
+            String valeur = expression[this.index];
 
             if (estOperateur(valeur)) {
                 racine = new Noeud(valeur);
-                racine.gauche = insererNoeud(racine.gauche, expression, index + 1);
-                racine.droit = insererNoeud(racine.droit, expression, index + 2);
+                this.index = this.index + 1;
+                racine.gauche = insererNoeud(racine.gauche, expression);
+                this.index = this.index + 1;
+                racine.droit = insererNoeud(racine.droit, expression);
             } else {
                 racine = new Noeud(valeur);
             }
@@ -26,8 +29,12 @@ public class ArbreBinaire {
     }
 
     public void inserer(String expression) {
+        this.index = 0;
         String[] elements = expression.split(" ");
-        racine = insererNoeud(racine, elements, 0);
+        for (String ele : elements){
+            System.out.println(ele);
+        }
+        racine = insererNoeud(racine, elements);
     }
 
     //détermine si la valeur est un opérateur
@@ -82,6 +89,18 @@ public class ArbreBinaire {
 
     public void setModel(ModelTableur model) {
         this.model = model;
+    }
+
+    public void afficherArbre() {
+        afficherArbre(racine, "", "");
+    }
+    
+    private void afficherArbre(Noeud racine, String espace, String direction) {
+        if (racine != null) {
+            System.out.println(espace + direction + racine.valeur);
+            afficherArbre(racine.gauche, espace + "│  ", "├─");
+            afficherArbre(racine.droit, espace + "   ", "└─");
+        }
     }
 
     //calcule le résultat du calcul dans l'arbre

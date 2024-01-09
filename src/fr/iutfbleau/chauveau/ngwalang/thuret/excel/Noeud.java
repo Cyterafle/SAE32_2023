@@ -11,6 +11,6 @@ public class Noeud {
 
     @Override
     public String toString() {
-        return valeur;
+        return this.valeur;
     }
 }
