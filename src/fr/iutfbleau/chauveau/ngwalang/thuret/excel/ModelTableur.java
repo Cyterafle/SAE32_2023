@@ -6,11 +6,9 @@ public class ModelTableur {
     private Cellule[][] data;
     private int selectedRow, selectedColumn, lastSelectedRow, lastSelectedColumn;
     private ControllerTableur controller;
-    private ArbreBinaire arbre;
 
     public ModelTableur(VueTableur v){
         this.data = new Cellule[9][9];
-        this.arbre = new ArbreBinaire(this);
         fillData();
         this.selectedRow = -1;
         this.selectedColumn = -1;
@@ -42,12 +40,9 @@ public class ModelTableur {
      */
     public void calcul(int row, int col, String formule){
         setFormule(row, col, formule);
-        System.out.println(formule);
-        System.out.println(formule.length());
-        this.arbre.inserer(formule);
-        setCellValue(row, col, arbre.calculer());
-        this.arbre.setModel(this);
-        this.arbre.afficherArbre();
+        data[row][col].getArbre().inserer(formule);
+        setCellValue(row, col, data[row][col].getArbre().calculer());
+        data[row][col].getArbre().setModel(this);
     }
 
     /**
@@ -117,7 +112,7 @@ public class ModelTableur {
     private void fillData(){
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
-                this.data[i][j] = new Cellule();
+                data[i][j] = new Cellule();
             }
         }
     }

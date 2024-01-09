@@ -5,25 +5,16 @@ package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
  * , la formule ainsi son Etat lors de l'inscription d'une formule
  */
 public class Cellule {
-    private int colIndex;
-    private char ligIndex;
     private Etat etat;
     private String formule;
     private double valeur;
+    private ArbreBinaire arbre;
     /**
      * Constructeur pour une nouvelle cellule
-     * @param col sert à définir la colonne
-     * @param ligne sert à définir la ligne
      */
-    public Cellule(int col, char ligne){
-        this.colIndex = col;
-        this.ligIndex = ligne;
-    }
-    /**
-     * Constructeur alternatif qui crée une cellule en définissant l'état de la formule à vide
-     */
-    public Cellule(){
+    public Cellule(ModelTableur m){
         this.etat = Etat.VIDE;
+        this.arbre = new ArbreBinaire(m);
     }
     /**
      * Permet de définir l'Etat de la cellule
@@ -46,20 +37,7 @@ public class Cellule {
     public void setvaleur(double value){
         this.valeur = value;
     }
-    /**
-     * Renvoie l'index de la colonne
-     * @return un index
-     */
-    public int getcolIndex(){
-        return this.colIndex;
-    }
-    /**
-     * Renvoie l'index de la ligne
-     * @return une ligne
-     */
-    public char getligIndex(){
-        return this.ligIndex;
-    }
+
     /**
      * Renvoie l'Etat de la cellule
      * @return un état
@@ -80,5 +58,13 @@ public class Cellule {
      */
     public double getvaleur(){
         return this.valeur;
+    }
+    /**
+     * Getter pour l'arbre binaire
+     * @return l'arbre binaire associé à la cellule
+     * 
+     */
+    public ArbreBinaire getArbre(){
+        return arbre;
     }
 }
