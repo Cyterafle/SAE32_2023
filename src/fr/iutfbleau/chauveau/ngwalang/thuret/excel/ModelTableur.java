@@ -40,9 +40,9 @@ public class ModelTableur {
      */
     public void calcul(int row, int col, String formule){
         setFormule(row, col, formule);
-        data[row][col].getArbre().inserer(formule);
-        setCellValue(row, col, data[row][col].getArbre().calculer());
-        data[row][col].getArbre().setModel(this);
+        this.data[row][col].getArbre().inserer(formule);
+        setCellValue(row, col, this.data[row][col].getArbre().calculer());
+        this.data[row][col].getArbre().setModel(this);
     }
 
     /**
@@ -90,7 +90,7 @@ public class ModelTableur {
     }
 
     public void addSelectionListener(ControllerTableur listener) {
-        controller = listener;
+        this.controller = listener;
     }
 
     public void addCellListener(JLabel[][] cells){
@@ -112,7 +112,7 @@ public class ModelTableur {
     private void fillData(){
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
-                data[i][j] = new Cellule();
+                this.data[i][j] = new Cellule(this);
             }
         }
     }

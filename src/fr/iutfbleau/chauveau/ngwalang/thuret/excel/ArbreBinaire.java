@@ -4,12 +4,22 @@ public class ArbreBinaire {
     private ModelTableur model;
     private int index;
 
+    /**
+    * Classe <code>ArbreBinaire</code> tirée du diagramme de classe fait par Côme
+    * Thuret. Elle sert à matérialiser un arbre de calcul, stocker les valeur de la formule
+    * ainsi que l'insrtion de noeud et le calcul d'une formule.
+    */
     public ArbreBinaire(ModelTableur mtab) {
         this.racine = null;
         this.model = mtab;
     }
 
-    // Méthode pour insérer un nouvel élément dans l'arbre
+    /**
+     * Permet de définir l'Etat de la cellule
+     * @return le noeud racine.
+     * @param racine représente la racine du l'abre ou du sous arbre à créer.
+     * @param expression représente la formule sous forme d'un tableau de string.
+     */
     private Noeud insererNoeud(Noeud racine, String[] expression) {
         if (this.index < expression.length) {
             String valeur = expression[this.index];
@@ -28,6 +38,10 @@ public class ArbreBinaire {
         return racine;
     }
 
+    /**
+     * Permet l'exécution de la méthode insererNoeud()
+     * @param expression représente la formule sous forme d'un string.
+     */
     public void inserer(String expression) {
         this.index = 0;
         String[] elements = expression.split(" ");
@@ -37,11 +51,20 @@ public class ArbreBinaire {
         racine = insererNoeud(racine, elements);
     }
 
-    //détermine si la valeur est un opérateur
+    /**
+     * Permet de savoir si une string donnée est un opérateur
+     * @return un bouléen, true si c'est un opérateur, false si non.
+     * @param valeur  représente la string à vérifier.
+     */
     private boolean estOperateur(String valeur) {
         return valeur.equals("+") || valeur.equals("-") || valeur.equals("*") || valeur.equals("/");
     }
 
+    /**
+     * Permet de savoir si une string donnée est une cellule
+     * @return un bouléen, true si c'est une cellule, false si non.
+     * @param valeur  représente la string à vérifier.
+     */
     private boolean estCellule(String valeur) {
         char[] alpha = new char[9];
         char[] num = new char[9];
@@ -64,10 +87,15 @@ public class ArbreBinaire {
         return false;
     }
 
-    private double getCellVal(String valeur){
+    /**
+     * Permet de récuperer la valeur associer à une cellule.
+     * @return un double correspondant à la valeur de la cellule.
+     * @param cellName  représente le nom de la cellule.
+     */
+    private double getCellVal(String cellName){
         char[] alpha = new char[9];
         char[] num = new char[9];
-        char[] element = valeur.toCharArray();
+        char[] element = cellName.toCharArray();
         double val = 0.0;
         for (int t = 0; t < 9; t++){
             alpha[t] = (char) ('A'+ t );
@@ -87,14 +115,27 @@ public class ArbreBinaire {
         return val;
     }
 
+    /**
+     * Permet de metre à jour le modèle stocké dans l'objet ArbreBinaire
+     * @param model  représente le nouveau model à mettre à jour.
+     */
     public void setModel(ModelTableur model) {
         this.model = model;
     }
 
+    /**
+     * Permet l'exécution de la méthode afficherArbre(Noeud racine, String espace, String direction).
+     */
     public void afficherArbre() {
         afficherArbre(racine, "", "");
     }
     
+    /**
+     * Permet d'afficher l'arbre dans le terminal
+     * @param racine représente la racine de l'arbre.
+     * @param espace repésente les espaces apparent dans le terminal.
+     * @param direction correspond aux différentes dirrection que peux predre l'arbre. 
+     */
     private void afficherArbre(Noeud racine, String espace, String direction) {
         if (racine != null) {
             System.out.println(espace + direction + racine.valeur);
@@ -103,12 +144,19 @@ public class ArbreBinaire {
         }
     }
 
-    //calcule le résultat du calcul dans l'arbre
+    /**
+     * Permet d'exécuter la methode calculer
+     * @return un double qui correspond au résultat du calcul.
+     */
     public double calculer() {
         return calculer(racine);
     }
 
-    // Méthode récursive pour calculer le résultat dans un sous-arbre
+    /**
+     * Permet d'effectuer un calcul stocké dans un arbre
+     * @return un double qui correspond au résultat du calcul.
+     * @param racine correspond à la racine de l'arbre de calcul.
+     */
     private double calculer(Noeud racine) {
         if (racine == null) {
             return 0.0;
