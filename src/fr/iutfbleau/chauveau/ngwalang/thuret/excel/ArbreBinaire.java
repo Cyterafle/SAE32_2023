@@ -196,6 +196,14 @@ public class ArbreBinaire {
         return true;
     }
 
+    /*public String getFormuleValidationMessage(String expression) {
+        if (calculableForm(expression)) {
+            return "Formule correcte mais incalculable";
+        } else {
+            return "Formule incorrecte";
+        }
+    }
+
     /**
      * Permet d'exécuter la methode calculer
      * @return un double qui correspond au résultat du calcul.
