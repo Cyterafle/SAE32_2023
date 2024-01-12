@@ -84,6 +84,16 @@ public class ArbreBinaire {
         return false;
     }
 
+    private boolean estValeur(String valeur){
+        try{
+            Double.parseDouble(valeur);
+            return true;
+        }
+        catch (NumberFormatException e){
+            return false;
+        }
+    }
+
     /**
      * Permet de récuperer la valeur associer à une cellule.
      * @return un double correspondant à la valeur de la cellule.
@@ -182,6 +192,9 @@ public class ArbreBinaire {
         String[] elements = expression.split(" ");
         int acc = 0;
         String formVal = null;
+        if (!estOperateur(elements[0])){
+            return false;
+        }
         for( String ele : elements){
             if (estCellule(ele)){
                 formVal = getCellForm(ele);
@@ -190,6 +203,9 @@ public class ArbreBinaire {
                 }
             }
             if ( acc > 0){
+                return false;
+            }
+            if ( !estCellule(ele) && !estOperateur(ele) && !estValeur(ele)){
                 return false;
             }
         }
@@ -213,33 +229,44 @@ public class ArbreBinaire {
         if (racine == null) {
             return 0.0;
         }
-
-        else if (!estOperateur(racine.valeur)) {
-            if (estCellule(racine.valeur)) {
-                return getCellVal(racine.valeur);
-            } else {
-                return Double.parseDouble(racine.valeur);
-            }
-        }
-
-        double gauche = calculer(racine.gauche);
-        double droit = calculer(racine.droit);
-
-        switch (racine.valeur) {
-            case "+":
-                return gauche + droit;
-            case "-":
-                return gauche - droit;
-            case "*":
-                return gauche * droit;
-            case "/":
-                if (droit != 0) {
-                    return gauche / droit;
-                } else {
-                    throw new ArithmeticException("Division par zéro");
+    
+        try {
+            if (!estOperateur(racine.valeur)) {
+                if (estCellule(racine.valeur)) {
+                    return getCellVal(racine.valeur);
+                } 
+                else if(estValeur(racine.valeur)){
+                    return Double.parseDouble(racine.valeur);
                 }
-            default:
-                throw new IllegalArgumentException("Opérateur non pris en charge : " + racine.valeur);
+                else if(!estCellule(racine.valeur) || !estValeur(racine.valeur)){
+                    throw new IllegalArgumentException("Valeur inconnue : " + racine.valeur); 
+                }
+            }
+    
+            double gauche = calculer(racine.gauche);
+            double droit = calculer(racine.droit);
+    
+            switch (racine.valeur) {
+                case "+":
+                    return gauche + droit;
+                case "-":
+                    return gauche - droit;
+                case "*":
+                    return gauche * droit;
+                case "/":
+                    if (droit != 0) {
+                        return gauche / droit;
+                    } else {
+                        System.err.println("Erreur : Division par zéro");
+                        return 0.0;  // Vous pouvez également choisir de retourner Double.NaN pour indiquer une division par zéro
+                    }
+                default:
+                    System.err.println("Erreur : Opérateur non pris en charge : " + racine.valeur);
+                    return 0.0;
+            }
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erreur : " + e.getMessage());
+            return 0.0;
         }
     }
 }
