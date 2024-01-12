@@ -65,7 +65,7 @@ public class ArbreBinaire {
      * @return un bouléen, true si c'est une cellule, false si non.
      * @param valeur  représente la string à vérifier.
      */
-    private boolean estCellule(String valeur) {
+    public boolean estCellule(String valeur) {
         char[] alpha = new char[9];
         char[] num = new char[9];
         char[] element = valeur.toCharArray();
