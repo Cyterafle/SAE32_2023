@@ -164,6 +164,16 @@ public class ArbreBinaire {
         }
     }
 
+    private boolean estCorrectForm(String expression){
+        try {
+            this.calculer(this.racine);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+
     public boolean calculableFrom(String expression){
         return calculableForm(expression);
     }
