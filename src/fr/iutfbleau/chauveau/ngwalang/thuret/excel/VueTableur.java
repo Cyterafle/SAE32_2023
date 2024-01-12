@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class VueTableur extends JFrame {
 
+    private ModelTableur model;
     private JLabel[][] cellule;
     private JTextField champFormule;
 
@@ -35,6 +36,15 @@ public class VueTableur extends JFrame {
 
             for (int j = 0; j < 9; j++) {
                 this.cellule[i][j] = new JLabel();
+
+                /*String validationMessage = model.getFormuleValidationMessage(i, j);
+
+                if (validationMessage.contains("correcte")) {
+                    this.cellule[i][j].setText("Formule correcte");
+                } else {
+                    this.cellule[i][j].setText("Formule incorrecte");
+                }*/
+
                 this.cellule[i][j].setHorizontalAlignment(SwingConstants.CENTER);
                 this.cellule[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 this.cellule[i][j].setOpaque(true);

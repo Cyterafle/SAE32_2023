@@ -122,4 +122,14 @@ public class ModelTableur {
             }
         }
     }
+
+    /*public boolean isFormuleValide(int row, int col) {
+        String formule = this.data[row][col].getformule();
+        return this.data[row][col].getArbre().calculableFrom(formule);
+    }
+    
+    public String getFormuleValidationMessage(int row, int col) {
+        String formule = this.data[row][col].getformule();
+        return this.data[row][col].getArbre().getFormuleValidationMessage(formule);
+    }*/
 }
