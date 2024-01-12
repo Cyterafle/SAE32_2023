@@ -39,6 +39,7 @@ public class ModelTableur {
      * @param formule représente la formule à partir de laquelle faire le calcul
      */
     public void calcul(int row, int col, String formule){
+        System.out.println(this.data[row][col].getArbre().calculableFrom(formule));
         setFormule(row, col, formule);
         this.data[row][col].getArbre().inserer(formule);
         setCellValue(row, col, this.data[row][col].getArbre().calculer());

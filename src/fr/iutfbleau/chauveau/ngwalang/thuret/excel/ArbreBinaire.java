@@ -45,9 +45,6 @@ public class ArbreBinaire {
     public void inserer(String expression) {
         this.index = 0;
         String[] elements = expression.split(" ");
-        for (String ele : elements){
-            System.out.println(ele);
-        }
         racine = insererNoeud(racine, elements);
     }
 
@@ -115,6 +112,29 @@ public class ArbreBinaire {
         return val;
     }
 
+    private String getCellForm(String cellName){
+        char[] alpha = new char[9];
+        char[] num = new char[9];
+        char[] element = cellName.toCharArray();
+        String formule = null;
+        for (int t = 0; t < 9; t++){
+            alpha[t] = (char) ('A'+ t );
+            num[t] = (char) ('1'+ t);
+
+        }
+
+        for (int i = 0; i < 9 ; i++){
+            if (element[0] == alpha[i]){
+                for (int j = 0 ; j < 9 ; j++){
+                    if (element[1] == num[j]){
+                        formule = this.model.getFormule(j, i);
+                    }
+                }
+            }
+        }
+        return formule;
+    }
+
     /**
      * Permet de metre à jour le modèle stocké dans l'objet ArbreBinaire
      * @param model  représente le nouveau model à mettre à jour.
@@ -142,6 +162,28 @@ public class ArbreBinaire {
             afficherArbre(racine.gauche, espace + "│  ", "├─");
             afficherArbre(racine.droit, espace + "   ", "└─");
         }
+    }
+
+    public boolean calculableFrom(String expression){
+        return calculableForm(expression);
+    }
+
+    private boolean calculableForm(String expression){
+        String[] elements = expression.split(" ");
+        int acc = 0;
+        String formVal = null;
+        for( String ele : elements){
+            if (estCellule(ele)){
+                formVal = getCellForm(ele);
+                if ( formVal == null){
+                    acc += 1;
+                }
+            }
+            if ( acc > 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
