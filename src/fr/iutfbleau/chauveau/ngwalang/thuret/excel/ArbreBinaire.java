@@ -277,4 +277,8 @@ public class ArbreBinaire {
             return 0.0;
         }
     }
+
+    public Noeud getRacine(){
+        return racine;
+    }
 }

@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class VueTableur extends JFrame {
 
-    private ModelTableur model;
     private JLabel[][] cellule;
     private JTextField champFormule;
 

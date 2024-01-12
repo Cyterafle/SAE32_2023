@@ -6,6 +6,7 @@ public class ModelTableur {
     private Cellule[][] data;
     private int selectedRow, selectedColumn, lastSelectedRow, lastSelectedColumn;
     private ControllerTableur controller;
+    private ReferenceCirculaire rc;
 
     public ModelTableur(VueTableur v){
         this.data = new Cellule[9][9];
@@ -13,6 +14,7 @@ public class ModelTableur {
         this.selectedRow = -1;
         this.selectedColumn = -1;
         this.vue = v;
+        rc = new ReferenceCirculaire();
     }
     /**
      * Récupère la formule associée à une cellule
@@ -39,6 +41,7 @@ public class ModelTableur {
      * @param formule représente la formule à partir de laquelle faire le calcul
      */
     public void calcul(int row, int col, String formule){
+        rc.isLoop(row, col, data);
         setFormule(row, col, formule);
         this.data[row][col].getArbre().inserer(formule);        
         if(this.data[row][col].getArbre().calculableFrom(formule)){
@@ -97,6 +100,10 @@ public class ModelTableur {
 
     public void addSelectionListener(ControllerTableur listener) {
         this.controller = listener;
+    }
+
+    public Cellule[][] getData(){
+        return data;
     }
 
     public void addCellListener(JLabel[][] cells){
