@@ -41,16 +41,21 @@ public class ModelTableur {
      * @param formule représente la formule à partir de laquelle faire le calcul
      */
     public void calcul(int row, int col, String formule){
-        rc.isLoop(row, col, data);
         setFormule(row, col, formule);
-        this.data[row][col].getArbre().inserer(formule);        
-        if(this.data[row][col].getArbre().calculableFrom(formule)){
-            setCellValue(row, col, this.data[row][col].getArbre().calculer());
-            this.data[row][col].getArbre().setModel(this);
+        this.data[row][col].getArbre().inserer(formule);
+        if (! rc.isLoop(row, col, data)){
+            data[row][col].setetat(Etat.VIDE);        
+            if(this.data[row][col].getArbre().calculableFrom(formule)){
+                setCellValue(row, col, this.data[row][col].getArbre().calculer());
+                this.data[row][col].getArbre().setModel(this);
+            }
+            else if (this.data[row][col].getArbre().calculableFrom(formule) ==  false){
+                this.data[row][col].getArbre().calculer();
+                this.data[row][col].getArbre().setModel(this);
+            }
         }
-        else if (this.data[row][col].getArbre().calculableFrom(formule) ==  false){
-            this.data[row][col].getArbre().calculer();
-            this.data[row][col].getArbre().setModel(this);
+        else {
+           ErrState(); 
         }
     }
 
@@ -130,6 +135,12 @@ public class ModelTableur {
         }
     }
 
+    private void ErrState(){
+        for (String cellule : rc.getLoopList()){
+            data[rc.getRowNumber(cellule.charAt(1))][rc.getColNumber(cellule.charAt(0))].setetat(Etat.REFERENCE_CIRCULAIRE);
+            vue.getCellule(rc.getRowNumber(cellule.charAt(1)), rc.getColNumber(cellule.charAt(0))).setText("ERREUR");
+        }
+    }
     /*public boolean isFormuleValide(int row, int col) {
         String formule = this.data[row][col].getformule();
         return this.data[row][col].getArbre().calculableFrom(formule);

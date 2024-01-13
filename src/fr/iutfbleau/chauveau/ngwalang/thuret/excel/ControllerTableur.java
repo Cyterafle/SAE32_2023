@@ -50,7 +50,8 @@ public class ControllerTableur implements SelectionListener, ActionListener{
             if (ligne >= 0 && colonne >= 0) {
                 String nouvelleFormule = this.vue.getChampFormule().getText();
                 this.model.calcul(ligne, colonne, nouvelleFormule);
-                this.vue.getCellule(ligne, colonne).setText(this.model.getCellValue(ligne, colonne));
+                if (! (model.getData()[ligne][colonne].getetat() == Etat.REFERENCE_CIRCULAIRE))
+                    this.vue.getCellule(ligne, colonne).setText(this.model.getCellValue(ligne, colonne));
                 this.vue.getCellule(ligne, colonne).setBackground(null);
                 this.vue.getChampFormule().setEnabled(false);
             }

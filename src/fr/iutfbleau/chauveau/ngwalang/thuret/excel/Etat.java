@@ -14,12 +14,16 @@ public enum Etat {
     VALIDE_CALCULABLE,
     /**
      * Lorsque la formule ne peut pas être calculée
-     * à cause d'un léger problème type mention d'une cellule
+     * à cause d'un léger problème comme la mention d'une cellule
      * vide
      */
     VALIDE_INCALCULABLE,
     /**
      * Lorsque la formule saisie ne peut simplement pas être acceptée
      */
-    INVALIDE;
+    INVALIDE,
+    /**
+     * Lorsque la cellule contient une reférence circulaire
+     */
+    REFERENCE_CIRCULAIRE;
 }

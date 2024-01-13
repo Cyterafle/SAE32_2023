@@ -7,6 +7,7 @@ package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 public class Cellule {
     private Etat etat;
     private String formule;
+    //private String valeurAlt;
     private double valeur;
     private ArbreBinaire arbre;
     /**
@@ -47,7 +48,7 @@ public class Cellule {
     }
     /**
      * Renvoie la dernière formule connue
-     * @return une formule
+     * @return la formule
      */
     public String getformule(){
         return this.formule;
@@ -67,4 +68,19 @@ public class Cellule {
     public ArbreBinaire getArbre(){
         return arbre;
     }
+    /**
+     * Modifie la valeur alternative de la cellule
+     * @param valeur correspond à la nouvelle valeur
+     */
+    /*public void setvaleurAlt(String valeur){
+        valeurAlt = valeur;
+    }*/
+
+    /**
+     * Recupère la valeur alternative de la cellule
+     * @return la dernière valeur connue pour l'attribut
+     */
+    /*public String getvaleurAlt(){
+        return valeurAlt;
+    }*/
 }

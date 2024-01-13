@@ -1,9 +1,11 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
+
+import java.util.*;
+
 public class ArbreBinaire {
     private Noeud racine;
     private ModelTableur model;
     private int index;
-
     /**
     * Classe <code>ArbreBinaire</code> tirée du diagramme de classe fait par Côme
     * Thuret. Elle sert à matérialiser un arbre de calcul, stocker les valeur de la formule
@@ -27,9 +29,9 @@ public class ArbreBinaire {
             if (estOperateur(valeur)) {
                 racine = new Noeud(valeur);
                 this.index = this.index + 1;
-                racine.gauche = insererNoeud(racine.gauche, expression);
+                racine.setGauche(insererNoeud(racine.getGauche(), expression));
                 this.index = this.index + 1;
-                racine.droit = insererNoeud(racine.droit, expression);
+                racine.setDroit(insererNoeud(racine.getDroit(), expression));
             } else {
                 racine = new Noeud(valeur);
             }
@@ -62,7 +64,7 @@ public class ArbreBinaire {
      * @return un bouléen, true si c'est une cellule, false si non.
      * @param valeur  représente la string à vérifier.
      */
-    public boolean estCellule(String valeur) {
+    private boolean estCellule(String valeur) {
         char[] alpha = new char[9];
         char[] num = new char[9];
         char[] element = valeur.toCharArray();
@@ -168,9 +170,9 @@ public class ArbreBinaire {
      */
     private void afficherArbre(Noeud racine, String espace, String direction) {
         if (racine != null) {
-            System.out.println(espace + direction + racine.valeur);
-            afficherArbre(racine.gauche, espace + "│  ", "├─");
-            afficherArbre(racine.droit, espace + "   ", "└─");
+            System.out.println(espace + direction + racine.toString());
+            afficherArbre(racine.getGauche(), espace + "│  ", "├─");
+            afficherArbre(racine.getDroit(), espace + "   ", "└─");
         }
     }
 
@@ -239,22 +241,22 @@ public class ArbreBinaire {
         }
     
         try {
-            if (!estOperateur(racine.valeur)) {
-                if (estCellule(racine.valeur)) {
-                    return getCellVal(racine.valeur);
+            if (!estOperateur(racine.toString())) {
+                if (estCellule(racine.toString())) {
+                    return getCellVal(racine.toString());
                 } 
-                else if(estValeur(racine.valeur)){
-                    return Double.parseDouble(racine.valeur);
+                else if(estValeur(racine.toString())){
+                    return Double.parseDouble(racine.toString());
                 }
-                else if(!estCellule(racine.valeur) || !estValeur(racine.valeur)){
-                    throw new IllegalArgumentException("Valeur inconnue : " + racine.valeur); 
+                else if(!estCellule(racine.toString()) || !estValeur(racine.toString())){
+                    throw new IllegalArgumentException("Valeur inconnue : " + racine.toString()); 
                 }
             }
     
-            double gauche = calculer(racine.gauche);
-            double droit = calculer(racine.droit);
+            double gauche = calculer(racine.getGauche());
+            double droit = calculer(racine.getDroit());
     
-            switch (racine.valeur) {
+            switch (racine.toString()) {
                 case "+":
                     return gauche + droit;
                 case "-":
@@ -269,7 +271,7 @@ public class ArbreBinaire {
                         return 0.0;  // Vous pouvez également choisir de retourner Double.NaN pour indiquer une division par zéro
                     }
                 default:
-                    System.err.println("Erreur : Opérateur non pris en charge : " + racine.valeur);
+                    System.err.println("Erreur : Opérateur non pris en charge : " + racine.toString());
                     return 0.0;
             }
         } catch (IllegalArgumentException e) {

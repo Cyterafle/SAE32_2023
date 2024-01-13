@@ -19,7 +19,7 @@ ${tmp}/${pkg}/Main.class : ${tmp}/${pkg}/ControllerTableur.class
 
 ## Grosse règle circulaire ici faisant qu'il ne pouvait pas être autrement 
 ${tmp}/${pkg}/ControllerTableur.class : ${tmp}/${pkg}/VueTableur.class ${tmp}/${pkg}/SelectionListener.class ${tmp}/${pkg}/Noeud.class ${tmp}/${pkg}/Etat.class
-	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/ControllerTableur.java src/${pkg}/ModelTableur.java src/${pkg}/CellListener.java src/${pkg}/ArbreBinaire.java src/${pkg}/Cellule.java
+	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/ControllerTableur.java src/${pkg}/ModelTableur.java src/${pkg}/CellListener.java src/${pkg}/ArbreBinaire.java src/${pkg}/Cellule.java src/${pkg}/ReferenceCirculaire.java
 
 ${tmp}/${pkg}/VueTableur.class :
 	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/VueTableur.java
@@ -33,6 +33,7 @@ ${tmp}/${pkg}/Etat.class :
 
 ${tmp}/${pkg}/Noeud.class :
 	${jvc} ${jflags} -d ${tmp} -cp ${tmp} src/${pkg}/Noeud.java
+		
 
 clean :
 	rm -rf ${tmp}
