@@ -304,7 +304,11 @@ public class ArbreBinaire {
         return racine;
     }
 
-    public void parcoursArbre(Noeud n, Cellule c, boolean remove){
+    public void parcoursArbre(Cellule c, boolean remove){
+        parcoursArbre(racine, c, remove);
+    }
+    
+    private void parcoursArbre(Noeud n, Cellule c, boolean remove){
         try {
             if (n.getGauche() !=  null){
                 parcoursArbre(n.getGauche(), c, remove);

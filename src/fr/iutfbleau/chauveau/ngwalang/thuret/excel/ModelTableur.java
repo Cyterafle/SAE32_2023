@@ -42,6 +42,7 @@ public class ModelTableur {
      */
     public void calcul(int row, int col, String formule){
         setFormule(row, col, formule);
+        this.data[row][col].getArbre().parcoursArbre(this.data[row][col], true);
         this.data[row][col].getArbre().inserer(formule);
         if (! rc.isLoop(row, col, data)){
             data[row][col].setetat(Etat.VIDE);     
@@ -49,6 +50,7 @@ public class ModelTableur {
             System.out.println(this.data[row][col].getArbre().calculableForm(formule));
             if(this.data[row][col].getArbre().estCorrectForm()){
                 if(this.data[row][col].getArbre().calculableForm(formule)){
+                    this.data[row][col].getArbre().parcoursArbre(this.data[row][col], false);
                     setCellValue(row, col, this.data[row][col].getArbre().calculer());
                     this.data[row][col].getArbre().setModel(this);
                     data[row][col].setetat(Etat.VALIDE_CALCULABLE);
@@ -150,7 +152,7 @@ public class ModelTableur {
             for (int j = 0; j < 9; j++){
                 if (data[i][j].getetat() == Etat.REFERENCE_CIRCULAIRE)
                     vue.getCellule(i, j).setText("ERREUR");
-                else if (data[i][j].getetat() != Etat.VIDE)
+                else if (data[i][j].getetat() == Etat.VALIDE_CALCULABLE)
                     vue.getCellule(i, j).setText(getCellValue(i, j));
             }
         }
