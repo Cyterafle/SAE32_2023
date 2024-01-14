@@ -108,7 +108,7 @@ public class Cellule implements CellObserver {
     }
 
     /**
-     * Prévient les observeurs d'une modification
+     * Prévient les observeurs d'une modification sur l'objet observé
      */
     public void notifyCellObservers(){
         for (Cellule c : observers){

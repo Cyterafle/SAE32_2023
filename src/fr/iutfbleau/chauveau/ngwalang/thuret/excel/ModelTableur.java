@@ -1,6 +1,9 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 import javax.swing.*;
 
+/**
+ * Classe <code>ModelTableur</code> qui gère les données, leur insertion, leur modification ainsi que certaines mises à jour de la vue
+ */
 public class ModelTableur {
     private VueTableur vue;
     private Cellule[][] data;
@@ -8,6 +11,10 @@ public class ModelTableur {
     private ControllerTableur controller;
     private ReferenceCirculaire rc;
 
+    /**
+     * Constructeur d'un nouveau modèle
+     * @param v la vue associée
+     */
     public ModelTableur(VueTableur v){
         this.data = new Cellule[9][9];
         fillData();
@@ -81,44 +88,87 @@ public class ModelTableur {
         this.data[row][col].setvaleur(value);
     }
 
+    /**
+     * Récupère la valeur d'une cellule
+     * @param row la ligne de la cellule concernée
+     * @param col la colonne de la cellule concernée
+     * @return la valeur parsée en String
+     */
     public String getCellValue(int row, int col) {
         return Double.toString(this.data[row][col].getvaleur());
     }
 
+    /**
+     * Permet de définir la cellule sélectionnée
+     * @param row la ligne de la cellule concernée
+     * @param col la colonne de la cellule concernée
+     */
     public void setSelectedCell(int row, int col) {
         this.selectedRow = row;
         this.selectedColumn = col;
         notifySelectionListeners();
     }
 
+    /**
+     * Permet de définir la ligne de la dernière cellule séléctionnée
+     * @param row la ligne
+     */
     public void setLastSelectedRow(int row){
         this.lastSelectedRow = row;
     }
 
+    /**
+     * Permet de définir la colonne de la dernière cellule séléctionnée
+     * @param row la colonne
+     */
     public void setLastSelectedColumn(int col){
         this.lastSelectedColumn = col;
     }
 
+    /**
+     * Permet de récupérer la ligne de la dernière cellule séléctionnée
+     * @return la ligne
+     */
     public int getLastSelectedRow(){
         return this.lastSelectedRow;
     }
 
+    /**
+     * Permet de récupérer la colonne de la dernière cellule séléctionnée
+     * @return la colonne
+     */
     public int getLastSelectedColumn(){
         return this.lastSelectedColumn;
     }
 
+    /**
+     * Permet de récupérer la ligne de la cellule séléctionnée actuellement
+     * @return la ligne
+     */
     public int getSelectedRow() {
         return this.selectedRow;
     }
 
+    /**
+     * Permet de récupérer la ligne de la colonne séléctionnée actuellement
+     * @return la colonne
+     */
     public int getSelectedColumn() {
         return this.selectedColumn;
     }
 
+    /**
+     * Ajoute un listener à selectionListener
+     * @param listener le contrôleur à ajouter en tant que listener
+     */
     public void addSelectionListener(ControllerTableur listener) {
         this.controller = listener;
     }
 
+    /**
+     * Renvoie le tableau de Cellule 
+     * @return le tableau
+     */
     public Cellule[][] getData(){
         return data;
     }
