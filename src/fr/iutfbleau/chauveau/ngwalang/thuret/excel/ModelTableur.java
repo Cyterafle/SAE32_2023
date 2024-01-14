@@ -54,6 +54,7 @@ public class ModelTableur {
                 this.data[row][col].getArbre().calculer();
                 this.data[row][col].getArbre().setModel(this);
             }
+            data[row][col].notifyCellObservers();
         }
         else {
            ErrState(); 
@@ -132,6 +133,17 @@ public class ModelTableur {
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
                 this.data[i][j] = new Cellule(this);
+            }
+        }
+    }
+
+    public void updateView(){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                if (data[i][j].getetat() == Etat.REFERENCE_CIRCULAIRE)
+                    vue.getCellule(i, j).setText("ERREUR");
+                else if (data[i][j].getetat() != Etat.VIDE)
+                    vue.getCellule(i, j).setText(getCellValue(i, j));
             }
         }
     }

@@ -1,7 +1,5 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 
-import java.util.*;
-
 public class ArbreBinaire {
     private Noeud racine;
     private ModelTableur model;
@@ -305,4 +303,50 @@ public class ArbreBinaire {
     public Noeud getRacine(){
         return racine;
     }
+
+    public void parcoursArbre(Noeud n, Cellule c, boolean remove){
+        try {
+            if (n.getGauche() !=  null){
+                parcoursArbre(n.getGauche(), c, remove);
+            }
+            if (n.getDroit() != null){
+                parcoursArbre(n.getDroit(), c, remove);
+            }
+            if (estCellule(n.toString())){
+                if (remove)
+                    model.getData()[getRowNumber(n.toString().charAt(1))][getColNumber(n.toString().charAt(0))].removeCellObserver(c);
+                else
+                    model.getData()[getRowNumber(n.toString().charAt(1))][getColNumber(n.toString().charAt(0))].addCellObserver(c);
+            }
+        } catch (NullPointerException e) {
+                System.out.println("No values");
+        }
+    }
+
+    /**
+     * A partir de la syntaxe cellule (A1, B2...) permet de retrouver la ligne
+     * associée à cette dernière 
+     * @param s le dernier caractère de la cellule
+     * @return le numéro de ligne
+     */
+        public int getRowNumber(char s){
+            return s - 49;
+       }
+    
+       /**
+         * A partir de la syntaxe cellule (A1, B2...) permet de retrouver la colonne
+         * associée à cette dernière 
+         * @param s le dernier caractère de la cellule
+         * @return le numéro de ligne
+         */
+       public int getColNumber(char s){
+        char j = 'A';
+        for (int i = 0; i < 9; i++){
+            if (j == s){
+                return i;
+            }
+            j++;
+        }
+        return -1;
+       }
 }

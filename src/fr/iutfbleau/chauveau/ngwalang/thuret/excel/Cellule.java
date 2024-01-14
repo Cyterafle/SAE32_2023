@@ -1,21 +1,28 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
+
+import java.util.*;
+
 /**
  * Classe <code>Cellule</code> tirée du diagramme de classe fait par Côme
  * Thuret. Elle sert à matérialiser la cellule, stocker la valeur associée
  * , la formule ainsi son Etat lors de l'inscription d'une formule
  */
-public class Cellule {
+public class Cellule implements CellObserver {
     private Etat etat;
     private String formule;
     //private String valeurAlt;
     private double valeur;
     private ArbreBinaire arbre;
+    private List<Cellule> observers;
+    private ModelTableur model;
     /**
      * Constructeur pour une nouvelle cellule
      */
     public Cellule(ModelTableur m){
+        observers = new ArrayList<>();
         this.etat = Etat.VIDE;
         this.arbre = new ArbreBinaire(m);
+        model = m;
     }
     /**
      * Permet de définir l'Etat de la cellule
@@ -83,4 +90,25 @@ public class Cellule {
     /*public String getvaleurAlt(){
         return valeurAlt;
     }*/
+
+    public void addCellObserver(Cellule c){
+        observers.add(c);
+    }
+
+    public void removeCellObserver(Cellule c){
+        observers.remove(c);
+    }
+
+    public void notifyCellObservers(){
+        for (Cellule c : observers){
+            c.update();
+        }
+        model.updateView();
+    }
+    
+    @Override
+    public void update() {
+        if (etat != Etat.REFERENCE_CIRCULAIRE)
+            valeur = arbre.calculer();
+    }
 }

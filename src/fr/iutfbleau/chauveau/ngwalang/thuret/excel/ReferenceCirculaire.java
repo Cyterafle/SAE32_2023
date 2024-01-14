@@ -60,7 +60,7 @@ public class ReferenceCirculaire {
     * @param valeur la valeur du noeud dont on veut vérifier la présence d'une opérande type A1, B2...
     * @return true s'il y a cellule - false sinon
     */
-   public boolean estCellule(String valeur) {
+   private boolean estCellule(String valeur) {
     char[] alpha = new char[9];
     char[] num = new char[9];
     char[] element = valeur.toCharArray();
