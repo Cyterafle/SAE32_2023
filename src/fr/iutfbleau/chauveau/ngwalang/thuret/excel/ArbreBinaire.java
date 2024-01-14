@@ -179,15 +179,14 @@ public class ArbreBinaire {
     }
 
     private boolean estCorrectForm(Noeud racine){
+
         if (racine == null){
             return false;
         }
+
         else if (racine.getGauche() == null && racine.getDroit() == null){
-            if (!estValeur(racine.toString())){
+            if (!estValeur(racine.toString()) && !estCellule(racine.toString())){
                 return false;
-            }
-            else{
-                return true;
             }
         }
         else{
@@ -255,8 +254,9 @@ public class ArbreBinaire {
         if (racine == null) {
             return 1.0;
         }
+
+        System.out.println(estCellule(racine.toString()) + " cellule");
         System.out.println(racine.toString());
-        System.out.println(estCellule(racine.toString()));
 
     
         try {
