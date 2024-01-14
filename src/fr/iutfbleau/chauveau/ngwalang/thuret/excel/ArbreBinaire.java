@@ -26,7 +26,11 @@ public class ArbreBinaire {
      * @param expression représente la formule sous forme d'un tableau de string.
      */
     private Noeud insererNoeud(Noeud racine, String[] expression) {
-        if (this.index < expression.length) {
+        if (expression.length == 1){
+            String valeur = expression[this.index];
+            racine = new Noeud(valeur);
+        }
+        else if (this.index < expression.length) {
             String valeur = expression[this.index];
 
             racine = new Noeud(valeur);
@@ -34,10 +38,6 @@ public class ArbreBinaire {
             racine.setGauche(insererNoeud(racine.getGauche(), expression));
             this.index = this.index + 1;
             racine.setDroit(insererNoeud(racine.getDroit(), expression));
-        }
-        else if (expression.length == 1){
-            String valeur = expression[this.index];
-            racine = new Noeud(valeur);
         }
 
         return racine;

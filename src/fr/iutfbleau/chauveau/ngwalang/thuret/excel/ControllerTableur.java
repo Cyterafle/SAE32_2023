@@ -33,7 +33,8 @@ public class ControllerTableur implements SelectionListener, ActionListener{
                 this.vue.getChampFormule().setText(this.model.getFormule(row, col));
                 if (this.model.getLastSelectedRow() >= 0 && this.model.getSelectedColumn() >= 0 &&
                         (this.model.getLastSelectedRow() != row || this.model.getLastSelectedColumn() != col)) {
-                    this.vue.getCellule(model.getLastSelectedRow(), this.model.getLastSelectedColumn()).setBackground(null);
+                            if ((model.getData()[model.getLastSelectedRow()][model.getLastSelectedColumn()].getetat() != Etat.INVALIDE) && (model.getData()[model.getLastSelectedRow()][model.getLastSelectedColumn()].getetat() != Etat.VALIDE_INCALCULABLE))
+                                this.vue.getCellule(model.getLastSelectedRow(), this.model.getLastSelectedColumn()).setBackground(null);
                 }
                 this.model.setLastSelectedRow(row);
                 this.model.setLastSelectedColumn(col);
@@ -53,8 +54,14 @@ public class ControllerTableur implements SelectionListener, ActionListener{
                     if (ligne >= 0 && colonne >= 0) {
                         String nouvelleFormule = this.vue.getChampFormule().getText();
                         this.model.calcul(ligne, colonne, nouvelleFormule);
-                        model.updateView();
-                        this.vue.getCellule(ligne, colonne).setBackground(null);
+                        if (model.getData()[ligne][colonne].getetat() == Etat.VALIDE_INCALCULABLE){
+                            vue.getCellule(ligne, colonne).setBackground(Color.ORANGE);
+                        }
+                        else if (model.getData()[ligne][colonne].getetat() == Etat.INVALIDE)
+                            vue.getCellule(ligne, colonne).setBackground(Color.RED);
+                        else {
+                            vue.getCellule(ligne, colonne).setBackground(null);
+                        }
                         this.vue.getChampFormule().setEnabled(false);
                     }
                 } else {

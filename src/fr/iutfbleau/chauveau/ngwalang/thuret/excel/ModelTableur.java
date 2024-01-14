@@ -73,6 +73,7 @@ public class ModelTableur {
                 data[row][col].setetat(Etat.INVALIDE);
                 this.data[row][col].getArbre().setModel(this);
             }
+            updateView();
             data[row][col].notifyCellObservers();
         }
         else {
@@ -231,6 +232,7 @@ public class ModelTableur {
             vue.getCellule(row, col).setBackground(Color.RED);
         else
             vue.getCellule(row, col).setBackground(null);
+        vue.revalidate();
     }
 
     /**
