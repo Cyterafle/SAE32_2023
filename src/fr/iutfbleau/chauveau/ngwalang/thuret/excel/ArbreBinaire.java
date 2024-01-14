@@ -176,14 +176,25 @@ public class ArbreBinaire {
         }
     }
 
-    private boolean estCorrectForm(String expression){
-        try {
-            this.calculer(this.racine);
-            return true;
-        }
-        catch (Exception e){
+    private boolean estCorrectForm(Noeud racine){
+        if (racine == null){
             return false;
         }
+        else if (racine.getGauche() == null && racine.getDroit() == null){
+            if (!estValeur(racine.toString()){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            if (!estCorrectForm(racine.getGauche()) || !estCorrectForm(racine.getDroit())){
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     public boolean calculableFrom(String expression){
@@ -195,9 +206,6 @@ public class ArbreBinaire {
         int acc = 0;
         String formVal = null;
         if (elements.length > 1){
-            if (!estOperateur(elements[0])){
-                return false;
-            }
             for( String ele : elements){
                 if (estCellule(ele)){
                     formVal = getCellForm(ele);
@@ -214,16 +222,13 @@ public class ArbreBinaire {
             }
             return true;
         }
-        else if (elements.length == 1){
-            if (estValeur(elements[0])){
-                return true;
-            }
-            else {
+        if (elements.length == 1){
+            if (!estValeur(elements[0])){
                 return false;
             }
         }
+        return true;
         
-        return false;
         
     }
 
