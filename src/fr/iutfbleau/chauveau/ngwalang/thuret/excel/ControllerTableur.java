@@ -2,6 +2,8 @@ package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 import java.awt.*;
 import java.awt.event.*;
 
+import javax.swing.JOptionPane;
+
 public class ControllerTableur implements SelectionListener, ActionListener{
     private ModelTableur model;
     private VueTableur vue;
@@ -45,15 +47,18 @@ public class ControllerTableur implements SelectionListener, ActionListener{
      */
     @Override
         public void actionPerformed(ActionEvent e) {
-            int ligne = this.model.getSelectedRow();
-            int colonne = this.model.getSelectedColumn();
-            if (ligne >= 0 && colonne >= 0) {
-                String nouvelleFormule = this.vue.getChampFormule().getText();
-                this.model.calcul(ligne, colonne, nouvelleFormule);
-                if (! (model.getData()[ligne][colonne].getetat() == Etat.REFERENCE_CIRCULAIRE))
-                    this.vue.getCellule(ligne, colonne).setText(this.model.getCellValue(ligne, colonne));
-                this.vue.getCellule(ligne, colonne).setBackground(null);
-                this.vue.getChampFormule().setEnabled(false);
-            }
+                int ligne = this.model.getSelectedRow();
+                int colonne = this.model.getSelectedColumn();
+                if (! this.vue.getChampFormule().getText().equals("")) {
+                    if (ligne >= 0 && colonne >= 0) {
+                        String nouvelleFormule = this.vue.getChampFormule().getText();
+                        this.model.calcul(ligne, colonne, nouvelleFormule);
+                        model.updateView();
+                        this.vue.getCellule(ligne, colonne).setBackground(null);
+                        this.vue.getChampFormule().setEnabled(false);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(vue,"La formule ne peut pas être vide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
         }
-}
+    }

@@ -113,6 +113,8 @@ public class Cellule implements CellObserver {
     public void notifyCellObservers(){
         for (Cellule c : observers){
             c.update();
+            if (! c.observers.isEmpty())
+                c.notifyCellObservers();
         }
         model.updateView();
     }

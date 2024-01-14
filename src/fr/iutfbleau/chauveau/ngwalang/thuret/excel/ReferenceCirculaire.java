@@ -52,7 +52,7 @@ public class ReferenceCirculaire {
             referencesAParcourir.add(n.toString());
         }
     } catch (NullPointerException e) {
-            System.out.println("No values");
+        System.err.println("Noeud vide");
     }
    }
    /**

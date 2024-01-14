@@ -29,15 +29,15 @@ public class ArbreBinaire {
         if (this.index < expression.length) {
             String valeur = expression[this.index];
 
-            if (estOperateur(valeur)) {
-                racine = new Noeud(valeur);
-                this.index = this.index + 1;
-                racine.setGauche(insererNoeud(racine.getGauche(), expression));
-                this.index = this.index + 1;
-                racine.setDroit(insererNoeud(racine.getDroit(), expression));
-            } else {
-                racine = new Noeud(valeur);
-            }
+            racine = new Noeud(valeur);
+            this.index = this.index + 1;
+            racine.setGauche(insererNoeud(racine.getGauche(), expression));
+            this.index = this.index + 1;
+            racine.setDroit(insererNoeud(racine.getDroit(), expression));
+        }
+        else if (expression.length == 1){
+            String valeur = expression[this.index];
+            racine = new Noeud(valeur);
         }
 
         return racine;
@@ -207,8 +207,17 @@ public class ArbreBinaire {
             return false;
         }
 
-        else if (racine.getGauche() == null && racine.getDroit() == null){
+
+        if (racine.getGauche() == null && racine.getDroit() == null){
             if (!estValeur(racine.toString()) && !estCellule(racine.toString())){
+                return false;
+            }
+            if (estOperateur(racine.toString())){
+                return false;
+            }
+        }
+        else if (racine.getGauche() != null && racine.getDroit() != null){
+            if ( !estOperateur(racine.toString())){
                 return false;
             }
         }
@@ -217,7 +226,7 @@ public class ArbreBinaire {
                 return false;
             }
         }
-        
+
         return true;
     }
 

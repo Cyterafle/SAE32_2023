@@ -1,4 +1,6 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
+import java.awt.Color;
+
 import javax.swing.*;
 
 /**
@@ -173,6 +175,10 @@ public class ModelTableur {
         return data;
     }
 
+    /**
+     * Permet d'ajouter un CellListener aux cellules pour détecter plus tard les clics
+     * @param cells le tableau correspondant aux cellules de la vue
+     */
     public void addCellListener(JLabel[][] cells){
         CellListener.setModel(this);
         CellListener.setVue(vue);
@@ -183,9 +189,13 @@ public class ModelTableur {
         }
     }
 
+    /**
+     * Prévient le selectionListener d'un changement d'Etat
+     */
     private void notifySelectionListeners() {
         this.controller.onCellSelected(selectedRow, selectedColumn);
     }
+
     /**
      * Méthode interne servant à initialiser les cellules pour éviter le NullPointerException
      */
@@ -197,6 +207,9 @@ public class ModelTableur {
         }
     }
 
+    /**
+     * Permet d'actualiser la vue après une modification
+     */
     public void updateView(){
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
@@ -204,10 +217,25 @@ public class ModelTableur {
                     vue.getCellule(i, j).setText("ERREUR");
                 else if (data[i][j].getetat() == Etat.VALIDE_CALCULABLE)
                     vue.getCellule(i, j).setText(getCellValue(i, j));
+                else
+                    updateVisualState(i, j);
             }
         }
     }
 
+    public void updateVisualState(int row, int col){
+        if (data[row][col].getetat() == Etat.VALIDE_INCALCULABLE){
+            vue.getCellule(row, col).setBackground(Color.ORANGE);
+        }
+        else if (data[row][col].getetat() == Etat.INVALIDE)
+            vue.getCellule(row, col).setBackground(Color.RED);
+        else
+            vue.getCellule(row, col).setBackground(null);
+    }
+
+    /**
+     * Permet de mettre à jour les cellules ayant une référence circulaire
+     */
     private void ErrState(){
         for (String cellule : rc.getLoopList()){
             data[rc.getRowNumber(cellule.charAt(1))][rc.getColNumber(cellule.charAt(0))].setetat(Etat.REFERENCE_CIRCULAIRE);
