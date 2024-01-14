@@ -91,14 +91,25 @@ public class Cellule implements CellObserver {
         return valeurAlt;
     }*/
 
+
+    /**
+     * Ajoute un observeur 
+     * @param c la cellule à ajouter
+     */
     public void addCellObserver(Cellule c){
         observers.add(c);
     }
-
+    /**
+     * Retire un observeur
+     * @param c la cellule à retirer
+     */
     public void removeCellObserver(Cellule c){
         observers.remove(c);
     }
 
+    /**
+     * Prévient les observeurs d'une modification
+     */
     public void notifyCellObservers(){
         for (Cellule c : observers){
             c.update();

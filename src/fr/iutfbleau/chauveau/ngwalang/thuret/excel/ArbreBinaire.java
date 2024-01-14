@@ -1,14 +1,19 @@
 package fr.iutfbleau.chauveau.ngwalang.thuret.excel;
 
-public class ArbreBinaire {
-    private Noeud racine;
-    private ModelTableur model;
-    private int index;
-    /**
+/**
     * Classe <code>ArbreBinaire</code> tirée du diagramme de classe fait par Côme
     * Thuret. Elle sert à matérialiser un arbre de calcul, stocker les valeur de la formule
     * ainsi que l'insrtion de noeud et le calcul d'une formule.
     */
+public class ArbreBinaire {
+    private Noeud racine;
+    private ModelTableur model;
+    private int index;
+    
+    /**
+     * Méthode d'instanciation 
+     * @param mtab le modèle du tableur
+     */
     public ArbreBinaire(ModelTableur mtab) {
         this.racine = null;
         this.model = mtab;
@@ -83,7 +88,11 @@ public class ArbreBinaire {
         }
         return false;
     }
-
+    /**
+     * Véeifie si le String donné en argument est un nombre
+     * @param valeur le String à vérifier
+     * @return true si oui - non autrement
+     */
     private boolean estValeur(String valeur){
         try{
             Double.parseDouble(valeur);
@@ -122,6 +131,11 @@ public class ArbreBinaire {
         return val;
     }
 
+    /**
+     * Permet à récupérer la formule d'une cellule
+     * @param cellName la cellule dont on veut la formule
+     * @return la formule fraîchement récupérée
+     */
     private String getCellForm(String cellName){
         char[] alpha = new char[9];
         char[] num = new char[9];
@@ -174,10 +188,19 @@ public class ArbreBinaire {
         }
     }
 
+    /**
+     * Permet de vérifier la véracité d'une cellule
+     * @return true si oui - false sinon
+     */
     public boolean estCorrectForm(){
         return estCorrectForm(racine);
     }
 
+    /**
+     * Permet de vérifier la véracité d'une cellule
+     * @param racine le noeud dont on vérifie les informations
+     * @return true si oui - false sinon
+     */
     private boolean estCorrectForm(Noeud racine){
 
         if (racine == null){
@@ -198,6 +221,11 @@ public class ArbreBinaire {
         return true;
     }
 
+    /**
+     * Permet de vérifier si l'arbre est calculable
+     * @param expression l'expression dont découle l'arbre
+     * @return true si oui - false sinon
+     */
     public boolean calculableForm(String expression){
         String[] elements = expression.split(" ");
         int acc = 0;
@@ -299,7 +327,10 @@ public class ArbreBinaire {
             return 4.0;
         }
     }
-
+    /**
+     * Getter pour renvoyer la racine de l'arbre
+     * @return la racine de l'arbre
+     */
     public Noeud getRacine(){
         return racine;
     }
@@ -307,7 +338,12 @@ public class ArbreBinaire {
     public void parcoursArbre(Cellule c, boolean remove){
         parcoursArbre(racine, c, remove);
     }
-    
+    /**
+     * Fonction pour parcourir un arbre à la recherche de cellules à observer
+     * @param n le noeud dont il faut observer les enfants
+     * @param c la cellule observatrice
+     * @param remove booléen qui définit comment parler à l'observer : True j'enlève ma cellule de la liste, False je l'ajoute
+     */
     private void parcoursArbre(Noeud n, Cellule c, boolean remove){
         try {
             if (n.getGauche() !=  null){
