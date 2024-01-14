@@ -174,6 +174,10 @@ public class ArbreBinaire {
         }
     }
 
+    public boolean estCorrectForm(){
+        return estCorrectForm(racine);
+    }
+
     private boolean estCorrectForm(Noeud racine){
         if (racine == null){
             return false;
@@ -195,11 +199,7 @@ public class ArbreBinaire {
         return true;
     }
 
-    public boolean calculableFrom(String expression){
-        return calculableForm(expression);
-    }
-
-    private boolean calculableForm(String expression){
+    public boolean calculableForm(String expression){
         String[] elements = expression.split(" ");
         int acc = 0;
         String formVal = null;

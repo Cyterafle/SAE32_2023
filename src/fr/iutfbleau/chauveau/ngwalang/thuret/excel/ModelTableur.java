@@ -44,14 +44,20 @@ public class ModelTableur {
         setFormule(row, col, formule);
         this.data[row][col].getArbre().inserer(formule);
         if (! rc.isLoop(row, col, data)){
-            data[row][col].setetat(Etat.VIDE);    
-            System.out.println(this.data[row][col].getArbre().calculableFrom(formule) + " model");    
-            if(this.data[row][col].getArbre().calculableFrom(formule)){
-                setCellValue(row, col, this.data[row][col].getArbre().calculer());
-                this.data[row][col].getArbre().setModel(this);
+            data[row][col].setetat(Etat.VIDE);     
+            if(this.data[row][col].getArbre().estCorrectForm()){
+                if(this.data[row][col].getArbre().calculableForm(formule)){
+                    setCellValue(row, col, this.data[row][col].getArbre().calculer());
+                    this.data[row][col].getArbre().setModel(this);
+                    data[row][col].setetat(Etat.VALIDE_CALCULABLE);
+                }
+                else {
+                    data[row][col].setetat(Etat.VALIDE_INCALCULABLE);
+                    this.data[row][col].getArbre().setModel(this);
+                }
             }
-            else if (this.data[row][col].getArbre().calculableFrom(formule) ==  false){
-                this.data[row][col].getArbre().calculer();
+            else {
+                data[row][col].setetat(Etat.INVALIDE);
                 this.data[row][col].getArbre().setModel(this);
             }
             data[row][col].notifyCellObservers();
