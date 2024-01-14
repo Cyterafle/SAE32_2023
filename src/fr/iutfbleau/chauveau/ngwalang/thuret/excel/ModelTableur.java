@@ -44,7 +44,8 @@ public class ModelTableur {
         setFormule(row, col, formule);
         this.data[row][col].getArbre().inserer(formule);
         if (! rc.isLoop(row, col, data)){
-            data[row][col].setetat(Etat.VIDE);        
+            data[row][col].setetat(Etat.VIDE);    
+            System.out.println(this.data[row][col].getArbre().calculableFrom(formule) + " model");    
             if(this.data[row][col].getArbre().calculableFrom(formule)){
                 setCellValue(row, col, this.data[row][col].getArbre().calculer());
                 this.data[row][col].getArbre().setModel(this);

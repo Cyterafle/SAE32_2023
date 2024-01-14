@@ -181,7 +181,7 @@ public class ArbreBinaire {
             return false;
         }
         else if (racine.getGauche() == null && racine.getDroit() == null){
-            if (!estValeur(racine.toString()){
+            if (!estValeur(racine.toString())){
                 return false;
             }
             else{
@@ -223,7 +223,7 @@ public class ArbreBinaire {
             return true;
         }
         if (elements.length == 1){
-            if (!estValeur(elements[0])){
+            if (!estValeur(elements[0]) && ! estCellule(elements[0])){
                 return false;
             }
         }
@@ -257,10 +257,14 @@ public class ArbreBinaire {
         if (racine == null) {
             return 1.0;
         }
+        System.out.println(racine.toString());
+        System.out.println(estCellule(racine.toString()));
+
     
         try {
             if (!estOperateur(racine.toString())) {
                 if (estCellule(racine.toString())) {
+                    System.out.print(getCellVal(racine.toString()));
                     return getCellVal(racine.toString());
                 } 
                 else if(estValeur(racine.toString())){
