@@ -194,24 +194,37 @@ public class ArbreBinaire {
         String[] elements = expression.split(" ");
         int acc = 0;
         String formVal = null;
-        if (!estOperateur(elements[0])){
-            return false;
-        }
-        for( String ele : elements){
-            if (estCellule(ele)){
-                formVal = getCellForm(ele);
-                if ( formVal == null){
-                    acc += 1;
+        if (elements.length > 1){
+            if (!estOperateur(elements[0])){
+                return false;
+            }
+            for( String ele : elements){
+                if (estCellule(ele)){
+                    formVal = getCellForm(ele);
+                    if ( formVal == null){
+                        acc += 1;
+                    }
+                }
+                if ( acc > 0){
+                    return false;
+                }
+                if ( !estCellule(ele) && !estOperateur(ele) && !estValeur(ele)){
+                    return false;
                 }
             }
-            if ( acc > 0){
-                return false;
+            return true;
+        }
+        else if (elements.length == 1){
+            if (estValeur(elements[0])){
+                return true;
             }
-            if ( !estCellule(ele) && !estOperateur(ele) && !estValeur(ele)){
+            else {
                 return false;
             }
         }
-        return true;
+        
+        return false;
+        
     }
 
     /*public String getFormuleValidationMessage(String expression) {
@@ -237,7 +250,7 @@ public class ArbreBinaire {
      */
     private double calculer(Noeud racine) {
         if (racine == null) {
-            return 0.0;
+            return 1.0;
         }
     
         try {
@@ -268,15 +281,15 @@ public class ArbreBinaire {
                         return gauche / droit;
                     } else {
                         System.err.println("Erreur : Division par zéro");
-                        return 0.0;  // Vous pouvez également choisir de retourner Double.NaN pour indiquer une division par zéro
+                        return 2.0;  // Vous pouvez également choisir de retourner Double.NaN pour indiquer une division par zéro
                     }
                 default:
                     System.err.println("Erreur : Opérateur non pris en charge : " + racine.toString());
-                    return 0.0;
+                    return 3.0;
             }
         } catch (IllegalArgumentException e) {
             System.err.println("Erreur : " + e.getMessage());
-            return 0.0;
+            return 4.0;
         }
     }
 
