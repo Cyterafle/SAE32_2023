@@ -170,6 +170,29 @@ public class ArbreBinaire {
         return formule;
     }
 
+    private Etat getCellState(String cellName){
+        char[] alpha = new char[9];
+        char[] num = new char[9];
+        char[] element = cellName.toCharArray();
+        Etat state = null;
+        for (int t = 0; t < 9; t++){
+            alpha[t] = (char) ('A'+ t );
+            num[t] = (char) ('1'+ t);
+
+        }
+
+        for (int i = 0; i < 9 ; i++){
+            if (element[0] == alpha[i]){
+                for (int j = 0 ; j < 9 ; j++){
+                    if (element[1] == num[j]){
+                        state = this.model.getCellState(j, i);
+                    }
+                }
+            }
+        }
+        return state;
+    }
+
     /**
      * Permet de metre à jour le modèle stocké dans l'objet ArbreBinaire
      * @param model  représente le nouveau model à mettre à jour.
@@ -226,15 +249,14 @@ public class ArbreBinaire {
         String[] elements = expression.split(" ");
         int acc = 0;
         String formVal = null;
+        Etat state = null;
         if (elements.length > 1){
             for( String ele : elements){
                 if (estCellule(ele)){
                     formVal = getCellForm(ele);
-                    if ( formVal == null){
+                    state = getCellState(ele);
+                    if ( formVal == null || state == Etat.INVALIDE){
                         acc += 1;
-                    }
-                    else if (formVal != null && !Double.isNaN(getCellVal(ele))){
-                        return false;
                     }
                 }
                 if ( acc > 0){
@@ -281,12 +303,9 @@ public class ArbreBinaire {
         if (racine == null) {
             return 1.0;
         }
-
-    
         try {
             if (!estOperateur(racine.toString())) {
                 if (estCellule(racine.toString())) {
-                    System.out.print(getCellVal(racine.toString()));
                     return getCellVal(racine.toString());
                 } 
                 else if(estValeur(racine.toString())){
