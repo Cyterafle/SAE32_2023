@@ -50,22 +50,26 @@ public class ControllerTableur implements SelectionListener, ActionListener{
         public void actionPerformed(ActionEvent e) {
                 int ligne = this.model.getSelectedRow();
                 int colonne = this.model.getSelectedColumn();
-                if (! this.vue.getChampFormule().getText().equals("")) {
-                    if (ligne >= 0 && colonne >= 0) {
-                        String nouvelleFormule = this.vue.getChampFormule().getText();
-                        this.model.calcul(ligne, colonne, nouvelleFormule);
-                        if (model.getData()[ligne][colonne].getetat() == Etat.VALIDE_INCALCULABLE){
-                            vue.getCellule(ligne, colonne).setBackground(Color.ORANGE);
+                try {
+                    if (! this.vue.getChampFormule().getText().equals("")) {
+                        if (ligne >= 0 && colonne >= 0) {
+                            String nouvelleFormule = this.vue.getChampFormule().getText();
+                            this.model.calcul(ligne, colonne, nouvelleFormule);
+                            if (model.getData()[ligne][colonne].getetat() == Etat.VALIDE_INCALCULABLE){
+                                vue.getCellule(ligne, colonne).setBackground(Color.ORANGE);
+                            }
+                            else if (model.getData()[ligne][colonne].getetat() == Etat.INVALIDE)
+                                vue.getCellule(ligne, colonne).setBackground(Color.RED);
+                            else {
+                                vue.getCellule(ligne, colonne).setBackground(null);
+                            }
+                            this.vue.getChampFormule().setEnabled(false);
                         }
-                        else if (model.getData()[ligne][colonne].getetat() == Etat.INVALIDE)
-                            vue.getCellule(ligne, colonne).setBackground(Color.RED);
-                        else {
-                            vue.getCellule(ligne, colonne).setBackground(null);
-                        }
-                        this.vue.getChampFormule().setEnabled(false);
+                    } else {
+                        JOptionPane.showMessageDialog(vue,"La formule ne peut pas être vide.", "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(vue,"La formule ne peut pas être vide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (ArrayIndexOutOfBoundsException a) {
+                    JOptionPane.showMessageDialog(vue,"Formule indéchiffrable", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
         }
     }

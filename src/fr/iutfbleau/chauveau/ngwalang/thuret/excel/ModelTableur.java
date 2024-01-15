@@ -55,9 +55,9 @@ public class ModelTableur {
         this.data[row][col].getArbre().inserer(formule);
         if (! rc.isLoop(row, col, data)){
             data[row][col].setetat(Etat.VIDE);
+            this.data[row][col].getArbre().parcoursArbre(this.data[row][col], false);
             if(this.data[row][col].getArbre().estCorrectForm(formule)){
                 if(this.data[row][col].getArbre().calculableForm(formule)){
-                    this.data[row][col].getArbre().parcoursArbre(this.data[row][col], false);
                     setCellValue(row, col, this.data[row][col].getArbre().calculer());
                     this.data[row][col].getArbre().setModel(this);
                     data[row][col].setetat(Etat.VALIDE_CALCULABLE);
@@ -75,6 +75,7 @@ public class ModelTableur {
             data[row][col].notifyCellObservers();
         }
         else {
+           this.data[row][col].getArbre().parcoursArbre(this.data[row][col], false); 
            ErrState(); 
         }
     }
@@ -218,8 +219,10 @@ public class ModelTableur {
             for (int j = 0; j < 9; j++){
                 if (data[i][j].getetat() == Etat.REFERENCE_CIRCULAIRE)
                     vue.getCellule(i, j).setText("ERREUR");
-                else if (data[i][j].getetat() == Etat.VALIDE_CALCULABLE)
+                else if (data[i][j].getetat() == Etat.VALIDE_CALCULABLE){
                     vue.getCellule(i, j).setText(getCellValue(i, j));
+                    vue.getCellule(i, j).setBackground(null);
+                }
                 else
                     updateVisualState(i, j);
             }

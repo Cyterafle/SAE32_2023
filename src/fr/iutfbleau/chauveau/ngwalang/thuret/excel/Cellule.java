@@ -121,7 +121,10 @@ public class Cellule implements CellObserver {
     
     @Override
     public void update() {
-        if (etat != Etat.REFERENCE_CIRCULAIRE)
-            valeur = arbre.calculer();
-    }
+            if (getetat() != Etat.INVALIDE){
+                valeur = arbre.calculer();
+                setetat(Etat.VALIDE_CALCULABLE);
+            }
+        }
+
 }
