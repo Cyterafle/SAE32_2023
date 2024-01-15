@@ -26,20 +26,31 @@ public class ArbreBinaire {
      * @param expression représente la formule sous forme d'un tableau de string.
      */
     private Noeud insererNoeud(Noeud racine, String[] expression) {
+        
         if (expression.length == 1){
             String valeur = expression[this.index];
             racine = new Noeud(valeur);
         }
+
         else if (this.index < expression.length) {
             String valeur = expression[this.index];
 
-            racine = new Noeud(valeur);
-            this.index = this.index + 1;
-            racine.setGauche(insererNoeud(racine.getGauche(), expression));
-            this.index = this.index + 1;
-            racine.setDroit(insererNoeud(racine.getDroit(), expression));
+            if (estOperateur(valeur)) {
+                racine = new Noeud(valeur);
+                this.index = this.index + 1;
+                racine.setGauche(insererNoeud(racine.getGauche(), expression));
+                this.index = this.index + 1;
+                racine.setDroit(insererNoeud(racine.getDroit(), expression));
+            }
+            else if (estValeur(valeur) || estCellule(valeur)){
+                if (this.index == 0 && expression.length > 1){
+                    racine = new Noeud("0");
+                }
+                else{
+                    racine = new Noeud(valeur);
+                }
+            }
         }
-
         return racine;
     }
 
@@ -192,41 +203,17 @@ public class ArbreBinaire {
      * Permet de vérifier la véracité d'une cellule
      * @return true si oui - false sinon
      */
-    public boolean estCorrectForm(){
-        return estCorrectForm(racine);
+    public boolean estCorrectForm(String expression) {
+        String[] elements = expression.split(" ");
+        return estCorrectForm(elements, this.racine);
     }
 
-    /**
-     * Permet de vérifier la véracité d'une cellule
-     * @param racine le noeud dont on vérifie les informations
-     * @return true si oui - false sinon
-     */
-    private boolean estCorrectForm(Noeud racine){
-
-        if (racine == null){
+    private boolean estCorrectForm(String[] elements, Noeud racine){
+        String val = racine.toString();
+        String form = elements[0];
+        if (!val.equals(form)){
             return false;
         }
-
-
-        if (racine.getGauche() == null && racine.getDroit() == null){
-            if (!estValeur(racine.toString()) && !estCellule(racine.toString())){
-                return false;
-            }
-            if (estOperateur(racine.toString())){
-                return false;
-            }
-        }
-        else if (racine.getGauche() != null && racine.getDroit() != null){
-            if ( !estOperateur(racine.toString())){
-                return false;
-            }
-        }
-        else{
-            if (!estCorrectForm(racine.getGauche()) || !estCorrectForm(racine.getDroit())){
-                return false;
-            }
-        }
-
         return true;
     }
 
@@ -245,6 +232,9 @@ public class ArbreBinaire {
                     formVal = getCellForm(ele);
                     if ( formVal == null){
                         acc += 1;
+                    }
+                    else if (formVal != null && !Double.isNaN(getCellVal(ele))){
+                        return false;
                     }
                 }
                 if ( acc > 0){
@@ -291,9 +281,6 @@ public class ArbreBinaire {
         if (racine == null) {
             return 1.0;
         }
-
-        System.out.println(estCellule(racine.toString()) + " cellule");
-        System.out.println(racine.toString());
 
     
         try {

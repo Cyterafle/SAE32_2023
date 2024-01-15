@@ -54,10 +54,10 @@ public class ModelTableur {
         this.data[row][col].getArbre().parcoursArbre(this.data[row][col], true);
         this.data[row][col].getArbre().inserer(formule);
         if (! rc.isLoop(row, col, data)){
-            data[row][col].setetat(Etat.VIDE);     
-            System.out.println(this.data[row][col].getArbre().estCorrectForm());
-            System.out.println(this.data[row][col].getArbre().calculableForm(formule));
-            if(this.data[row][col].getArbre().estCorrectForm()){
+            data[row][col].setetat(Etat.VIDE);
+            this.data[row][col].getArbre().afficherArbre();
+            System.out.println(this.data[row][col].getArbre().calculableForm(formule) + "calc");
+            if(this.data[row][col].getArbre().estCorrectForm(formule)){
                 if(this.data[row][col].getArbre().calculableForm(formule)){
                     this.data[row][col].getArbre().parcoursArbre(this.data[row][col], false);
                     setCellValue(row, col, this.data[row][col].getArbre().calculer());
